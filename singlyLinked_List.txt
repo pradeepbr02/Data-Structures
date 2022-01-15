@@ -1,0 +1,173 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int data;
+    struct node *next;
+}Node;
+
+Node *insert_begin(Node *start){
+    Node *new_node;
+    new_node=(Node *)malloc(sizeof(Node));
+    if(new_node==NULL){
+        printf("No memory available\n");
+        exit(0);
+    }
+    int ele;
+    printf("Enter the element to be inserted\n");
+    scanf("%d",&ele);
+    new_node->data=ele;
+    new_node->next=NULL;
+    if(start==NULL){
+        start=new_node;
+        return start;
+    }
+    new_node->next=start;
+    start=new_node;
+    return start;
+}
+Node *insert_position(Node *start){
+    int position,count=0;
+    Node *new_node,*ptr,*preptr;
+    new_node=(Node *)malloc(sizeof(Node));
+    if(new_node==NULL){
+        printf("No memory available\n");
+        exit(0);
+    }
+    int ele;
+    printf("Enter the value of the element\n");
+    scanf("%d",&ele);
+    new_node->data=ele;
+    new_node->next=NULL;
+    printf("Enter the position\n");
+    scanf("%d",&position);
+    
+    if(position==1){
+        new_node->next=start;
+        start=new_node;
+    }
+ 
+    if(ptr!=NULL){
+        count++;
+        ptr=ptr->next;
+    }
+    if(count>position){
+        printf("Input exceeded the size\n");
+        return start;
+    }
+    ptr=start;
+    preptr=start;
+    for(int i=0;i<position-1;i++){
+        preptr=ptr;
+        ptr=ptr->next;
+    }
+    preptr->next=new_node;
+    new_node->next=ptr;
+    return start;
+    
+}
+
+Node *delete_ele(Node *start){
+    Node *ptr,*preptr;
+    int ele;
+    printf("Enter the element to delete\n");
+    scanf("%d",&ele);
+    if(start==NULL){
+        printf("No memory available\n");
+        return 0;
+    }
+    ptr=start;
+    if(ptr->data==ele){
+        start=start->next;
+        free(ptr);
+        return start;
+        
+    }
+    preptr=start;
+    while(ptr!=NULL){ 
+        
+        if(ptr->data==ele){
+            preptr->next=ptr->next;
+            free(ptr);
+            return start;
+        }
+        preptr=ptr;
+       ptr=ptr->next;
+    }
+    printf("%d is not present in linked list\n",ele);
+    return start;
+}
+Node *search_update(Node *start){
+    Node *ptr=start;
+    if(start==NULL){
+        printf("No memory available\n");
+        return 0;
+    }
+    int ele;
+    printf("Enter the element to be searched\n");
+    scanf("%d",&ele);
+    ptr=start;
+    while(ptr!=NULL){
+        if(ptr->data==ele){
+        printf("%d is present in the list\n",ptr->data);
+        return start;
+        }
+        ptr=ptr->next;
+    }
+    printf("%d is not present in the list\n",ele);
+    return start;
+}
+
+void display(Node *start){
+    Node *ptr=start;
+    if(start==NULL){
+        printf("No elements in the lists\n");
+        return;
+    }
+    while(ptr!=NULL){
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+
+}
+int main(){
+    int op;
+    Node *start=NULL;
+    do{
+        printf("1.Add at the beginning\n2.Add at position\n3.Delete any node\n4.Search and update\n5.Display\n6.Exit\n");
+        printf("Enter the choice\n");
+        scanf("%d",&op);
+        if(op>0 && op<6){
+        switch(op){
+            case 1:start=insert_begin(start);
+            break;
+            
+            case 2:start=insert_position(start);
+            break;
+            
+            case 3:start=delete_ele(start);
+            break;
+            
+            case 4:start=search_update(start);
+            break;
+            
+            case 5:display(start);
+            break;
+            
+            case 6:printf("Exit..");
+            return 0;
+            break;
+        }
+        }
+        
+    }
+    while(op<=6);
+    
+}

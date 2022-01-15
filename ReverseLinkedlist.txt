@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int data;
+    struct node *next;
+}Node;
+
+Node *insert(Node *start){
+    Node *ptr,*new_node;
+    new_node=(Node *)malloc(sizeof(Node));
+  
+    if(new_node==NULL){
+        printf("No memory available");
+        return 0;
+    }
+    int ele;
+    printf("Enter the element to be inserted\n");
+    scanf("%d",&ele);
+    new_node->data=ele;
+    new_node->next=NULL;
+    
+    if(start==NULL){
+        start=new_node;
+        return start;
+    }
+    ptr=start;
+    while(ptr->next!=NULL){
+        ptr=ptr->next;
+    }
+    ptr->next=new_node;
+    return start;
+    
+}
+
+Node *reverse_list(Node *start){
+    Node *prevNode,*currentNode,*nextNode;
+    prevNode=NULL;
+    currentNode=nextNode=start;
+    if(start==NULL){
+        printf("No list is available\n");
+        return 0;
+    }
+        while(nextNode!=NULL){
+            nextNode=nextNode->next;
+            currentNode->next=prevNode;
+            prevNode=currentNode;
+            currentNode=nextNode;
+        }
+        start=prevNode;
+        
+        return start;
+    }
+    
+    void display(Node *start){
+        Node *ptr;
+        if(start==NULL){
+            printf("No list exist\n");
+            return 0;
+        }
+        ptr=start;
+        while(ptr!=NULL){
+            printf("%d ",ptr->data);
+            ptr=ptr->next;
+        }
+    }
+    
+    int main(){
+        Node *start=NULL;
+        int op;
+        do{
+            printf("\n1.Insert Elements\n2.Reverse List\n3.Display\n");
+            printf("Enter the choice\n");
+            scanf("%d",&op);
+            
+            switch(op){
+            case 1:start=insert(start);
+            break;
+            case 2:start=reverse_list(start);
+            break;
+            case 3:display(start);
+            break;
+            }
+        }
+        while(op<=3);
+        
+    }
