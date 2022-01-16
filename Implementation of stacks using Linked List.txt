@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node
+{
+  int data;
+  struct node *next;
+} Node;
+
+Node *
+push (Node * start)
+{
+  Node *new_node, *ptr;
+  int ele;
+  new_node = (Node *) malloc (sizeof (Node));
+  if (new_node == NULL)
+    {
+      printf ("No memory available\n");
+      return 0;
+    }
+
+  printf ("Enter the element to be inserted\n");
+  scanf ("%d", &ele);
+  new_node->data = ele;
+  new_node->next = NULL;
+  if (start == NULL)
+    {
+      start = new_node;
+      return start;
+    }
+  ptr = start;
+  while (ptr->next != NULL)
+    {
+      ptr = ptr->next;
+    }
+  ptr->next = new_node;
+  return start;
+}
+
+Node *
+pop (Node * start)
+{
+  Node *ptr;
+  if (start == NULL)
+    {
+      printf ("No memory available\n");
+      return 0;
+    }
+  if (start->next == NULL)
+    {
+      free (start);
+      return 0;
+    }
+  ptr = start;
+  while (ptr != NULL)
+    {
+      if (ptr->next->next == NULL)
+	{
+	  free (ptr->next);
+	  ptr->next = NULL;
+	  return start;
+	}
+      ptr = ptr->next;
+    }
+  return start;
+}
+
+void
+display (Node * start)
+{
+  Node *ptr;
+  if (start == NULL)
+    {
+      printf ("No space available in the memory\n");
+      return;
+    }
+  ptr = start;
+  while (ptr != NULL)
+    {
+      printf ("%d\n", ptr->data);
+      ptr = ptr->next;
+    }
+}
+
+int
+main ()
+{
+  Node *start = NULL;
+  int choice;
+  do
+    {
+      printf ("\n1.PUSH\n2.POP\n3.DISPLAY\n4.EXIT\n");
+      printf ("Enter the choice\n");
+      scanf ("%d", &choice);
+      switch (choice)
+	{
+	case 1:
+	  start = push (start);
+	  break;
+	case 2:
+	  start = pop (start);
+	  break;
+	case 3:
+	  display (start);
+	  break;
+	case 4:
+	  printf ("Exiting\n");
+	  return 0;
+	  break;
+	}
+    }
+  while (choice <= 4);
+}

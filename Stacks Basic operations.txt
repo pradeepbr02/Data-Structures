@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int stack[4],top=-1;
+
+void push(int n){
+    int i;
+    if(top==3){
+        printf("Stack overflow\n");
+        return;
+    }
+    top=top+1;
+    stack[top]=n;
+}
+
+void pop(){
+    if(top==-1){
+        printf("Stack Underflow\n");
+        return;
+    }
+    printf("Deleting top element...%d",a[top]);
+    top=top-1;
+    
+}
+
+void display(){
+    if(top==-1){
+        printf("\nStack Underflow\n");
+        return;
+    }
+    int i;
+    for(i=0;i<top+1;i++){
+        printf("%d\n",a[top-i]);
+    }
+}
+
+int main(){
+    int choice;
+    int ele;
+    do{
+        printf("\n1.PUSH\n2.POP\n3.POP\n");
+        printf("Enter the choice\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:printf("Enter the element to insert\n");
+            scanf("%d",&ele);
+            push(ele);
+            break;
+            
+            case 2:pop();
+            break;
+            
+            case 3:display();
+            break;
+            
+        }
+    }while(choice<=3);
+}
