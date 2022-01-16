@@ -1,0 +1,154 @@
+#include<stdlib.h>
+#include<stdio.h>
+
+typedef struct node
+{
+  int data;
+  struct node *prev;
+  struct node *next;
+} Node;
+
+Node *
+insert (Node * start)
+{
+  Node *new_node, *ptr;
+  int ele;
+  new_node = (Node *) malloc (sizeof (Node));
+  if (new_node == NULL)
+    {
+      printf ("No memory available\n");
+      return 0;
+    }
+  printf ("Enter the element to be inserted\n");
+  scanf ("%d", &ele);
+  new_node->data = ele;
+  new_node->prev = NULL;
+  new_node->next = NULL;
+  if (start == NULL)
+    {
+      start = new_node;
+      return start;
+    }
+
+  new_node->next = start;
+  start->prev = new_node;
+  start = new_node;
+
+  return start;
+
+}
+
+Node *
+insertLeft (Node * start)
+{
+  Node *new_node, *ptr;
+  int ele;
+  new_node = (Node *) malloc (sizeof (Node));
+  if (new_node == NULL)
+    {
+      printf ("No memory is available\n");
+      return 0;
+    }
+  printf ("Enter the element to be inserted\n");
+  new_node->data = ele;
+  new_node->next = NULL;
+  new_node->prev = NULL;
+  if (start == NULL)
+    {
+      new_node = start;
+      return start;
+    }
+  int leftEle;
+  printf ("Enter the element to whose left new element has to be inserted\n");
+  scanf ("%d", &leftEle);
+  ptr = start;
+  if (start->data == leftEle)
+    {
+      new_node->next = start;
+      start->prev = new_node;
+      start = new_node;
+      return start;
+    }
+  while (ptr != NULL)
+    {
+      if (ptr->data == leftEle)
+	{
+	  new_node->next = ptr;
+	  new_node->prev = ptr->prev ;
+	  ptr->prev->next = new_node;
+	  ptr->prev = new_node;
+
+	}
+      ptr=ptr->next;
+    }
+
+  return start;
+
+}
+
+Node *delete_ele(Node *start){
+    Node *ptr;
+    int ele;
+    if(start==NULL){
+        printf("No list exist\n");
+        return 0;
+    }
+    printf("Enter the element to be deleted\n");
+    scanf("%d",&ele);
+    if(start->data==ele){
+    if(start->next==NULL){
+        free(start);
+        return 0;
+    }
+    start=start->next;
+    start->prev=NULL;
+    return start;
+    }
+    ptr=start;
+    while(ptr!=NULL){
+        if(ptr->data==ele){
+            ptr->prev->next=ptr->next->prev;
+            free(ptr);
+            return start;
+        }
+        ptr=ptr->next;
+    }
+    printf("%d doesn't exist in the list",ele);
+    return start;
+}
+void display(Node *start){
+    Node *ptr=start;
+    if(start==NULL){
+        printf("No memory available\n");
+        return;
+    }
+    while(ptr!=NULL){
+        printf("%d",ptr->data);
+        ptr=ptr->next;
+    }
+}
+
+int main(){
+    Node *start=NULL;
+    int choice;
+    do{
+        printf("\n1.Insert Element\n2.Insert Left\n3.Delete Element\n4.Display\n4.Exit\n");
+        printf("Enter the choice\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:start=insert(start);
+            break;
+            case 2:start=insertLeft(start);
+            break;
+            case 3:start=delete_ele(start);
+            break;
+            case 4:display(start);
+            break;
+            case 5:printf("exiting...");
+            return 0;
+            break;
+            
+        }
+    }while(choice<=5);
+    
+}
