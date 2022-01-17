@@ -1,0 +1,101 @@
+#include<stdlib.h>
+#include<stdio.h>
+
+typedef struct process{
+    int data;
+     struct process *next; 
+}Node;
+
+void append(Node **start,int val){
+    Node *new_node,*ptr;
+    new_node=(Node *)malloc(sizeof(Node));
+    if(new_node==NULL){
+        printf("No enough memory\n");
+        return;
+    }
+    new_node->data=val;
+    new_node->next=NULL;
+    if(*start==NULL){
+        *start=new_node;
+        return;
+    }
+    ptr=*start;
+    while(ptr->next!=NULL){
+        ptr=ptr->next;
+    }
+    ptr->next=new_node;
+    return;
+}
+
+void display(Node *start){
+    Node *ptr;
+    if(start==NULL){
+        printf("Memory usage list is zero\n");
+        return;
+    }
+    ptr=start;
+    printf("Memory usage list:\n");
+    while(ptr!=NULL){
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+}
+
+int findMax(Node *start){
+    Node *ptr;
+    if(start==NULL){
+        printf("Memory usage list is zero\n");
+        return 0;
+    }
+    int largest=0;
+    ptr=start;
+    while(ptr->next!=NULL){
+        if(ptr->data > ptr->next->data){
+            largest=ptr->data;
+        }
+        ptr=ptr->next;
+    }
+    if(ptr->data > largest){
+        largest=ptr->data;
+        return largest;
+    }
+    
+  
+    return largest;
+}
+int main(){
+    Node *start=NULL;
+    int choice;
+    int ele;
+    printf("1.Insert new process memory usage\n2.Display all the memory usage\n3.Get the maximum memory\n4.Exit\n");
+    printf("Enter your choice\n");
+    scanf("%d",&choice);
+    while(1){
+        if(choice==1){
+            printf("Enter the memory usage");
+            scanf("%d",&ele);
+            append(&start,ele);
+        }
+        else if(choice==2){
+            display(start);
+        }
+        else if(choice==3){
+            printf("Maximum memory used : %d",findMax(start));
+            
+        }
+        else if(choice==3){
+            printf("Exit\n");
+        }
+        else if(choice==4){
+            printf("Exit\n");
+            return 0;
+        }
+        else{
+            printf("Enter valid option\n");
+        }
+            printf("\n1.Insert new process memory usage\n2.Display all the memory usage\n3.Get the maximum memory\n4.Exit\n");
+            printf("Enter your choice\n");
+            scanf("%d",&choice);
+        
+    }
+}
