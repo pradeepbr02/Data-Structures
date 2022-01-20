@@ -1,0 +1,99 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int data;
+    struct node *next;
+}Node;
+
+void insert(Node **start,int ele){
+    Node *new_node;
+    new_node=(Node *)malloc(sizeof(Node));
+    if(new_node==NULL){
+        printf("No memory available\n");
+        return;
+    }
+    new_node->data=ele;
+    new_node->next=NULL;
+    if(*start==NULL){
+        *start=new_node;
+        return;
+    }
+    new_node->next=*start;
+    *start=new_node;
+    
+    
+}
+
+void sort(Node *start){
+    Node *ptr,*next_node;
+    if(start==NULL){
+        printf("Keyboard has no disassembled key\n");
+        return ;
+    }
+    int temp;
+    ptr=start;
+    next_node=ptr->next;
+    while(ptr->next!=NULL){
+        next_node=ptr->next;
+        while(next_node!=NULL){
+            if(ptr->data > next_node->data){
+                temp=ptr->data;
+                ptr->data=next_node->data;
+                next_node->data=temp;
+            }
+            next_node=next_node->next;
+        }
+        ptr=ptr->next;
+    }
+   
+
+ptr=start;
+while(ptr!=NULL){
+    printf("%d ",ptr->data);
+    ptr=ptr->next;
+}
+
+}
+void display(Node *start){
+    if(start==NULL){
+        printf("Keyboard has no disassembled key");
+        return ;
+    }
+    printf("Keyboard\n");
+    sort(start);
+}
+
+int main(){
+    Node *start=NULL;
+    int ele;
+    int choice;
+    printf("1.Enter a disassembled key\n2.View keyboard\n3.Exit\n");
+    printf("Enter your choice\n");
+    scanf("%d",&choice);
+    while(1){
+        if(choice==1){
+            printf("Enter the key number");
+            scanf("%d",&ele);
+            if(ele <10){
+            insert(&start,ele);
+            }
+            else{
+                printf("Enter the key number");
+            }
+        }
+        else if(choice==2){
+            display(start);
+        }
+        else if(choice==3){
+            printf("Exit\n");
+            return 0;
+        }
+        else{
+            printf("Enter a valid option\n");
+        }
+        printf("\n1.Enter a disassembled key\n2.View keyboard\n3.Exit\n");
+        printf("Enter your choice\n");
+        scanf("%d",&choice);
+        }
+    }
